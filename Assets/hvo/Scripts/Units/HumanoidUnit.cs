@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class HumanoidUnit : Unit
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    private Vector2 velocity;
+    private Vector3 lastPosition;
 
-    // Update is called once per frame
-    void Update()
+    protected void Update()
     {
-        
+        velocity = (transform.position - lastPosition) / Time.deltaTime;
+
+        lastPosition = transform.position;
+        IsMoving = velocity.magnitude > 0;
     }
 }
