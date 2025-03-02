@@ -1,9 +1,12 @@
 using UnityEngine;
+using Utils;
 
 public class HumanoidUnit : Unit
 {
     private Vector2 velocity;
     private Vector3 lastPosition;
+
+    public float CurrentSpeed => velocity.magnitude;
 
     protected void Update()
     {
@@ -11,5 +14,7 @@ public class HumanoidUnit : Unit
 
         lastPosition = transform.position;
         IsMoving = velocity.magnitude > 0;
+
+        animator.SetFloat(Constants.Animation.SPEED, CurrentSpeed);
     }
 }
