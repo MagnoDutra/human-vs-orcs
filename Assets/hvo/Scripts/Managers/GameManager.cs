@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameManager : SingletonManager<GameManager>
 {
+    public Unit activeUnit;
     private Vector2 initialTouchPoisition;
 
     void Update()
@@ -24,6 +25,12 @@ public class GameManager : SingletonManager<GameManager>
 
     void DetectClick(Vector2 inputPos)
     {
-        Debug.Log(inputPos);
+        Vector2 worldPoint = Camera.main.ScreenToWorldPoint(inputPos);
+        HandleClickOnGround(worldPoint);
+    }
+
+    void HandleClickOnGround(Vector2 worldPoint)
+    {
+        activeUnit.MoveTo(worldPoint);
     }
 }
