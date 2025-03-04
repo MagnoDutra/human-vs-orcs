@@ -6,6 +6,7 @@ public abstract class Unit : MonoBehaviour
 
   protected Animator animator;
   protected AIPawn aiPawn;
+  protected SpriteRenderer spriteRenderer;
 
   protected void Awake()
   {
@@ -14,14 +15,22 @@ public abstract class Unit : MonoBehaviour
       animator = anim;
     }
 
-    if (TryGetComponent<AIPawn>(out AIPawn aiPawn))
+    if (TryGetComponent<AIPawn>(out AIPawn AI))
     {
-      this.aiPawn = aiPawn;
+      aiPawn = AI;
+    }
+
+    if (TryGetComponent<SpriteRenderer>(out SpriteRenderer sr))
+    {
+      spriteRenderer = sr;
     }
   }
 
   public void MoveTo(Vector3 destination)
   {
+    Vector3 direction = (destination - transform.position).normalized;
+    spriteRenderer.flipX = direction.x < 0;
+
     aiPawn.SetDestination(destination);
   }
 }
