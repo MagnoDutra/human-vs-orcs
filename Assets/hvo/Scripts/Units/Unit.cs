@@ -2,11 +2,15 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
+  [SerializeField] private Material highlightMaterial;
   public bool IsMoving { get; protected set; }
+  public bool isTargeted;
 
   protected Animator animator;
   protected AIPawn aiPawn;
   protected SpriteRenderer spriteRenderer;
+
+  protected Material originalMaterial;
 
   protected void Awake()
   {
@@ -24,6 +28,8 @@ public abstract class Unit : MonoBehaviour
     {
       spriteRenderer = sr;
     }
+
+    originalMaterial = spriteRenderer.material;
   }
 
   public void MoveTo(Vector3 destination)
@@ -32,5 +38,27 @@ public abstract class Unit : MonoBehaviour
     spriteRenderer.flipX = direction.x < 0;
 
     aiPawn.SetDestination(destination);
+  }
+
+  public void Select()
+  {
+    isTargeted = true;
+    Highlight();
+  }
+
+  public void Deselect()
+  {
+    isTargeted = false;
+    Unhighlight();
+  }
+
+  private void Highlight()
+  {
+    spriteRenderer.material = highlightMaterial;
+  }
+
+  private void Unhighlight()
+  {
+    spriteRenderer.material = originalMaterial;
   }
 }
