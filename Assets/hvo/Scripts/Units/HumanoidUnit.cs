@@ -8,6 +8,11 @@ public class HumanoidUnit : Unit
 
     public float CurrentSpeed => velocity.magnitude;
 
+    void Start()
+    {
+        lastPosition = transform.position;
+    }
+
     protected void Update()
     {
         velocity = (transform.position - lastPosition) / Time.deltaTime;
