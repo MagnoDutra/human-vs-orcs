@@ -2,7 +2,6 @@ using UnityEngine;
 
 public abstract class Unit : MonoBehaviour
 {
-  [SerializeField] private Material highlightMaterial;
   public bool IsMoving { get; protected set; }
   public bool isTargeted;
 
@@ -11,6 +10,7 @@ public abstract class Unit : MonoBehaviour
   protected SpriteRenderer spriteRenderer;
 
   protected Material originalMaterial;
+  protected Material highlightMaterial;
 
   protected void Awake()
   {
@@ -30,6 +30,7 @@ public abstract class Unit : MonoBehaviour
     }
 
     originalMaterial = spriteRenderer.material;
+    highlightMaterial = Resources.Load<Material>("Materials/Outline");
   }
 
   public void MoveTo(Vector3 destination)
