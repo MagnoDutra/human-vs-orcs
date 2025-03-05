@@ -100,3 +100,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82167699ec06e4520bb3c70bbacca57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 1
+  spriteRenderer: {fileID: 2414040831754860490}
