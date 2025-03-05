@@ -4,7 +4,7 @@ public class GameManager : SingletonManager<GameManager>
 {
     [Header("UI")]
     [SerializeField] private PointToClick pointToClickPrefab;
-    public Unit activeUnit;
+    private Unit activeUnit;
     private Vector2 initialTouchPoisition = Vector2.zero;
 
     public bool HasActiveUnit => activeUnit != null;
@@ -61,13 +61,30 @@ public class GameManager : SingletonManager<GameManager>
 
     void HandleClickOnGround(Vector2 worldPoint)
     {
-        activeUnit.MoveTo(worldPoint);
-        DisplayClickEffect(worldPoint);
+        if (HasActiveUnit && IsHumanoid(activeUnit))
+        {
+            activeUnit.MoveTo(worldPoint);
+            DisplayClickEffect(worldPoint);
+        }
     }
 
     void HandleClickOnUnit(Unit unit)
     {
+        if (HasActiveUnit)
+        {
+            if (HasClickedOnActiveUnit(unit))
+            {
+                CancelActiveUnit();
+                return;
+            }
+        }
         SelectNewUnit(unit);
+    }
+
+    private void CancelActiveUnit()
+    {
+        activeUnit.Deselect();
+        activeUnit = null;
     }
 
     void SelectNewUnit(Unit unit)
@@ -79,6 +96,16 @@ public class GameManager : SingletonManager<GameManager>
 
         activeUnit = unit;
         activeUnit.Select();
+    }
+
+    bool HasClickedOnActiveUnit(Unit clickedUnit)
+    {
+        return clickedUnit == activeUnit;
+    }
+
+    bool IsHumanoid(Unit unit)
+    {
+        return unit is HumanoidUnit;
     }
 
     void DisplayClickEffect(Vector2 worldPoint)
