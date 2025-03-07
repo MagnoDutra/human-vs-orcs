@@ -4,6 +4,8 @@ public class GameManager : SingletonManager<GameManager>
 {
     [Header("UI")]
     [SerializeField] private PointToClick pointToClickPrefab;
+    [SerializeField] private ActionBar actionBar;
+
     private Unit activeUnit;
     private Vector2 initialTouchPoisition = Vector2.zero;
 
@@ -96,20 +98,20 @@ public class GameManager : SingletonManager<GameManager>
 
         activeUnit = unit;
         activeUnit.Select();
+        ShowUnitActions();
     }
 
-    bool HasClickedOnActiveUnit(Unit clickedUnit)
-    {
-        return clickedUnit == activeUnit;
-    }
+    bool HasClickedOnActiveUnit(Unit clickedUnit) => clickedUnit == activeUnit;
 
-    bool IsHumanoid(Unit unit)
-    {
-        return unit is HumanoidUnit;
-    }
+    bool IsHumanoid(Unit unit) => unit is HumanoidUnit;
 
     void DisplayClickEffect(Vector2 worldPoint)
     {
         Instantiate(pointToClickPrefab, (Vector3)worldPoint, Quaternion.identity);
+    }
+
+    void ShowUnitActions()
+    {
+        actionBar.Show();
     }
 }
