@@ -10,6 +10,8 @@ public class PointToClick : MonoBehaviour
 
     private float timer;
 
+
+    // Transformar em pool
     void Start()
     {
         initialScale = transform.localScale;
