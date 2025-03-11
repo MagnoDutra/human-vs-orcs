@@ -11,6 +11,11 @@ public class GameManager : SingletonManager<GameManager>
 
     public bool HasActiveUnit => activeUnit != null;
 
+    void Start()
+    {
+        ClearActionBarUI();
+    }
+
     void Update()
     {
         // Posicao mouse ou touch
@@ -112,6 +117,22 @@ public class GameManager : SingletonManager<GameManager>
 
     void ShowUnitActions()
     {
+        ClearActionBarUI();
+
+        var hardcodedActions = 2;
+
+        for (int i = 0; i < hardcodedActions; i++)
+        {
+            actionBar.RegisterAction();
+        }
+
         actionBar.Show();
+
+    }
+
+    void ClearActionBarUI()
+    {
+        actionBar.ClearActions();
+        actionBar.Hide();
     }
 }
